@@ -41,9 +41,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Regions needs to always be able to access your location.</string>
-	<key>NSLocationUsageDescription</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Regions needs to always be able to access your location.</string>
 </dict>
 </plist>
