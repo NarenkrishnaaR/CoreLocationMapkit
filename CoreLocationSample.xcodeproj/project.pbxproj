@@ -13,6 +13,7 @@
 		9BFE5DB5205FC99F00B770B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BFE5DB4205FC99F00B770B4 /* Assets.xcassets */; };
 		9BFE5DB8205FC99F00B770B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BFE5DB6205FC99F00B770B4 /* LaunchScreen.storyboard */; };
 		9BFE5DC0205FCAB400B770B4 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BFE5DBF205FCAB400B770B4 /* MapView.swift */; };
+		9BFE5DC22060E70400B770B4 /* LocationSearchTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BFE5DC12060E70400B770B4 /* LocationSearchTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		9BFE5DB7205FC99F00B770B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9BFE5DB9205FC99F00B770B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BFE5DBF205FCAB400B770B4 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		9BFE5DC12060E70400B770B4 /* LocationSearchTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				9BFE5DAD205FC99F00B770B4 /* AppDelegate.swift */,
 				9BFE5DAF205FC99F00B770B4 /* ViewController.swift */,
 				9BFE5DBF205FCAB400B770B4 /* MapView.swift */,
+				9BFE5DC12060E70400B770B4 /* LocationSearchTableView.swift */,
 				9BFE5DB1205FC99F00B770B4 /* Main.storyboard */,
 				9BFE5DB4205FC99F00B770B4 /* Assets.xcassets */,
 				9BFE5DB6205FC99F00B770B4 /* LaunchScreen.storyboard */,
@@ -141,6 +144,7 @@
 			files = (
 				9BFE5DB0205FC99F00B770B4 /* ViewController.swift in Sources */,
 				9BFE5DC0205FCAB400B770B4 /* MapView.swift in Sources */,
+				9BFE5DC22060E70400B770B4 /* LocationSearchTableView.swift in Sources */,
 				9BFE5DAE205FC99F00B770B4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

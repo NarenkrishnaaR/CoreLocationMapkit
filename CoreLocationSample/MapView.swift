@@ -14,10 +14,13 @@ class MapView: UIViewController,MKMapViewDelegate,CLLocationManagerDelegate {
   
   @IBOutlet weak var mapKitView: MKMapView!
   let locationManager = CLLocationManager()
+  var resultSearchController: UISearchController? = nil
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setupCoreLoactionAndMapkit()
+    appendLocationControllerToTheSearchController()
+    setupSearch()
   }
   
   override func didReceiveMemoryWarning() {
@@ -27,6 +30,22 @@ class MapView: UIViewController,MKMapViewDelegate,CLLocationManagerDelegate {
   
   override func viewDidAppear(_ animated: Bool) {
     
+  }
+  
+  func setupSearch(){
+    let searchBar = resultSearchController?.searchBar
+    searchBar?.sizeToFit()
+    searchBar?.placeholder = "Search for places"
+    navigationItem.titleView = resultSearchController?.searchBar
+    resultSearchController?.hidesNavigationBarDuringPresentation = false
+    resultSearchController?.dimsBackgroundDuringPresentation = true
+    definesPresentationContext = true
+  }
+  
+  func appendLocationControllerToTheSearchController(){
+    let locationSearchClass = storyboard?.instantiateViewController(withIdentifier: "LocationSearchTableView") as! LocationSearchTableView
+    resultSearchController = UISearchController(searchResultsController: locationSearchClass)
+    resultSearchController?.searchResultsUpdater = locationSearchClass
   }
   
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
