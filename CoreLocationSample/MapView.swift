@@ -10,11 +10,16 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapView: UIViewController,MKMapViewDelegate,CLLocationManagerDelegate {
+protocol HandleMapSearch {
+  func dropPinInAddress(placemark:MKPlacemark)
+}
+
+class MapView: UIViewController,MKMapViewDelegate,CLLocationManagerDelegate,HandleMapSearch {
   
   @IBOutlet weak var mapKitView: MKMapView!
   let locationManager = CLLocationManager()
   var resultSearchController: UISearchController? = nil
+  var selectedPin:MKPlacemark? = nil
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -44,8 +49,53 @@ class MapView: UIViewController,MKMapViewDelegate,CLLocationManagerDelegate {
   
   func appendLocationControllerToTheSearchController(){
     let locationSearchClass = storyboard?.instantiateViewController(withIdentifier: "LocationSearchTableView") as! LocationSearchTableView
+    locationSearchClass.mapView = mapKitView
+    locationSearchClass.handleMapSearchDelegate = self
     resultSearchController = UISearchController(searchResultsController: locationSearchClass)
     resultSearchController?.searchResultsUpdater = locationSearchClass
+  }
+  
+  func dropPinInAddress(placemark: MKPlacemark) {
+    selectedPin = placemark
+    // clear existing pins
+    mapKitView.removeAnnotations(mapKitView.annotations)
+    let annotation = MKPointAnnotation()
+    annotation.coordinate = placemark.coordinate
+    annotation.title = placemark.name
+    if let city = placemark.locality,
+      let state = placemark.administrativeArea {
+      annotation.subtitle = "(\(city) (\(state))"
+    }
+    mapKitView.addAnnotation(annotation)
+    let span = MKCoordinateSpanMake(0.05, 0.05)
+    let region = MKCoordinateRegionMake(placemark.coordinate, span)
+    mapKitView.setRegion(region, animated: true)
+  }
+  
+  func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    if annotation is MKUserLocation {
+      //return nil so map view draws "blue dot" for standard user location
+      return nil
+    }
+    let reuseId = "pin"
+    var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+    pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+    pinView?.pinTintColor = UIColor.red
+    pinView?.canShowCallout = true
+    let smallSquare = CGSize(width: 30, height: 30)
+    let button = UIButton(frame: CGRect(origin: .zero, size: smallSquare))
+    button.setImage(#imageLiteral(resourceName: "car"), for: .normal)
+    button.addTarget(self, action: #selector(getDirections), for: .touchUpInside)
+    pinView?.leftCalloutAccessoryView = button
+    return pinView
+  }
+  
+  @objc func getDirections(){
+    if let selectedPin = selectedPin {
+      let mapItem = MKMapItem(placemark: selectedPin)
+      let launchOptions = [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving]
+      mapItem.openInMaps(launchOptions: launchOptions)
+    }
   }
   
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
